@@ -39,7 +39,7 @@ function renderFn() {
   switch (state.route) {
     case "/cart": {
       console.log("calling renderCart");
-      page = renderCart();
+      page = renderCart(store);
       break;
     }
     case "/products": {
@@ -49,7 +49,7 @@ function renderFn() {
     }
 
     default: {
-      page = renderCart();
+      page = renderCart(store);
     }
   }
 

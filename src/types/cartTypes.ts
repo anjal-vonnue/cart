@@ -18,7 +18,8 @@ export type ActionType =
   | {
       type: "ADD_ITEM";
       payload: ProductType;
-    };
+    }
+  | { type: "REMOVE_ITEM"; payload: ProductType };
 
 export type ReducerType = (action: ActionType, state: StateType) => StateType;
 

@@ -1,37 +1,87 @@
-export function renderCart() {
+import { StoreType } from "../types/cartTypes";
+
+export function renderCart(store: StoreType) {
   const section = document.createElement("section");
-  section.innerHTML = ` <div class="cart-items">
+  const divEl = document.createElement("div");
+  divEl.className = "cart-items";
+
+  const cart = store.getState().cart;
+
+  let cartContent = ``;
+  cart.forEach((product) => {
+    cartContent += ` 
         <article class="product-card">
           <div class="product-content">
-            <h3>Product Name</h3>
-            <h4>Price: 4000</h4>
-            <h5>Category:</h5>
+            <h3 id="p-name" data-id=${product.id} data-name="${product.name}">${product.name}</h3>
+            <h4>Quantity: ${product.quantity}</h4>
+            <h4 id="p-price" data-price=${product.price}>Price: ${product.price * product.quantity}</h4>
+            <h5 id="p-category" data-category=${product.category}>Category: ${product.category}</h5>
           </div>
           <div class="product-buttons">
             <p>
               <label>Quantity: </label>
-              <input type="number" />
+              <input type="number" value="0" min="0" id="p-quantity"/>
             </p>
-            <button>REMOVE ITEM</button>
+            <button class="remove-btn">REMOVE ITEM</button>
           </div>
         </article>
-        <article class="product-card">
-          <div class="product-content">
-            <h3>Product Name</h3>
-            <h4>Price: 4000</h4>
-            <h5>Category:</h5>
-          </div>
-          <div class="product-buttons">
-            <p>
-              <label>Quantity: </label>
-              <input type="number" />
-            </p>
-            <button>REMOVE ITEM</button>
-          </div>
-        </article>
-      </div>
-      <div class="cart-total">
-        <div>
+     `;
+  });
+  divEl.innerHTML = cartContent;
+
+  const removeButtons = divEl.querySelectorAll(".remove-btn");
+  removeButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      console.log("remove button clicked");
+
+      const productContent = btn
+        .closest("article")
+        ?.querySelector(".product-content");
+      const productButtons = btn
+        .closest("article")
+        ?.querySelector(".product-buttons");
+
+      console.log(
+        productContent
+          ?.querySelector("#p-category")
+          ?.getAttribute("data-category"),
+      );
+
+      const pId = productContent
+        ?.querySelector("#p-name")
+        ?.getAttribute("data-id");
+      const pNmae = productContent
+        ?.querySelector("#p-name")
+        ?.getAttribute("data-name");
+      const pPrice = productContent
+        ?.querySelector("#p-price")
+        ?.getAttribute("data-price");
+      const pCategory = productContent
+        ?.querySelector("#p-category")
+        ?.getAttribute("data-category");
+      const pQuantityEL = productButtons?.querySelector(
+        "#p-quantity",
+      ) as HTMLInputElement;
+
+      const quantityValue = pQuantityEL.value;
+      if (pId && pNmae && pPrice && pCategory && quantityValue) {
+        store.dispatch({
+          type: "REMOVE_ITEM",
+          payload: {
+            id: Number(pId),
+            name: pNmae,
+            price: Number(pPrice),
+            category: pCategory,
+            quantity: Number(quantityValue),
+          },
+        });
+      }
+    });
+  });
+
+  const divTotal = document.createElement("div");
+  divTotal.className = "cart-total";
+  divTotal.innerHTML = `<div>
           <p>
             <label>COUPON CODE:</label>
             <input type="number" />
@@ -39,8 +89,9 @@ export function renderCart() {
           </p>
         </div>
         <h3>TOTAL PRIZE: 5000</h3>
-        <h3>SUB TOTAL: 3000</h3>
-      </div>`;
+        <h3>SUB TOTAL: 3000</h3>`;
 
+  section.appendChild(divEl);
+  section.appendChild(divTotal);
   return section;
 }
