@@ -1,0 +1,25 @@
+{
+  "name": "cart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anjal-vonnue/cart.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/anjal-vonnue/cart/issues"
+  },
+  "homepage": "https://github.com/anjal-vonnue/cart#readme",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
