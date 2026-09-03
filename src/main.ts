@@ -8,19 +8,19 @@ import { StateType } from "./types/cartTypes.js";
 console.log("hello world");
 const app = document.getElementById("app");
 
-const initialState: StateType = {
+const firstState: StateType = {
   cart: [
     {
       id: 1,
       name: "Wireless Headphones",
-      price: 79.99,
+      price: 80,
       category: "Electronics",
       quantity: 1,
     },
     {
       id: 2,
       name: "Mechanical Keyboard",
-      price: 89.99,
+      price: 90,
       category: "Electronics",
       quantity: 1,
     },
@@ -29,6 +29,16 @@ const initialState: StateType = {
   code: 0,
 };
 
+function loadSate() {
+  const savedState = localStorage.getItem("cart");
+  if (savedState) {
+    return JSON.parse(savedState);
+  } else {
+    return firstState;
+  }
+}
+
+const initialState = loadSate();
 const store = createStore(initialState, reducer);
 
 function renderFn() {

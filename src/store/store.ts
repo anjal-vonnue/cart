@@ -11,6 +11,8 @@ export function createStore(initialState: StateType, reducer: ReducerType) {
     console.log("===== dispatch called");
     console.log(state);
 
+    localStorage.setItem("cart", JSON.stringify(state));
+
     listeners.forEach((listener) => {
       listener();
     });
