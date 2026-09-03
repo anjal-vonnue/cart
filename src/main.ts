@@ -12,17 +12,17 @@ const initialState: StateType = {
   cart: [
     {
       id: 1,
-      name: "Laptop",
-      price: 3000,
-      category: "Gadget",
-      quantity: 0,
+      name: "Wireless Headphones",
+      price: 79.99,
+      category: "Electronics",
+      quantity: 1,
     },
     {
       id: 2,
-      name: "Phone",
-      price: 13000,
-      category: "Gadget",
-      quantity: 0,
+      name: "Mechanical Keyboard",
+      price: 89.99,
+      category: "Electronics",
+      quantity: 1,
     },
   ],
   route: "/product",
@@ -44,7 +44,7 @@ function renderFn() {
     }
     case "/products": {
       console.log("calling renderProduct");
-      page = renderProduct();
+      page = renderProduct(store);
       break;
     }
 

@@ -10,10 +10,15 @@ export interface StateType {
   cart: Array<ProductType>;
   route: string;
 }
-export type ActionType = {
-  type: "SET_ROUTE";
-  payload: string;
-};
+export type ActionType =
+  | {
+      type: "SET_ROUTE";
+      payload: string;
+    }
+  | {
+      type: "ADD_ITEM";
+      payload: ProductType;
+    };
 
 export type ReducerType = (action: ActionType, state: StateType) => StateType;
 
