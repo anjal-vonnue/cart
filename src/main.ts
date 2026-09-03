@@ -32,7 +32,7 @@ const initialState: StateType = {
 const store = createStore(initialState, reducer);
 
 function renderFn() {
-  let state = store.getState();
+  const state = store.getState();
   let page;
 
   console.log("===== inside render FN");

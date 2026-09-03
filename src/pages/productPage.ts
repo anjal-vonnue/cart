@@ -49,7 +49,7 @@ export function renderProduct(store: StoreType) {
 
   const addButtons = section.querySelectorAll(".add-btn");
   addButtons.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
+    btn.addEventListener("click", () => {
       console.log("btn clicked");
       const productContent = btn
         .closest("article")

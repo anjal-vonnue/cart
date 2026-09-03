@@ -88,7 +88,7 @@ export function renderCart(store: StoreType) {
   const code = store.getState().code;
 
   if (code) {
-    let discount = (totalPrice * code) / 100;
+    const discount = (totalPrice * code) / 100;
     discountPrize = totalPrice - discount;
   } else {
     discountPrize = totalPrice;
