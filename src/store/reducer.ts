@@ -48,43 +48,27 @@ export function reducer(action: ActionType, state: StateType): StateType {
     }
 
     case "REMOVE_ITEM": {
-      let flag = 0;
-
+      let newCart;
       state.cart.forEach((item) => {
         if (item.id === action.payload.id) {
-          flag = 1;
+          newCart = state.cart
+            .map((item) => {
+              if (item.id === action.payload.id) {
+                return {
+                  ...item,
+                  quantity: item.quantity - action.payload.quantity,
+                };
+              } else {
+                return item;
+              }
+            })
+            .filter((item) => item.quantity > 0);
         }
       });
-      let newCart;
-      if (flag) {
-        newCart = state.cart
-          .map((item) => {
-            if (item.id === action.payload.id) {
-              return {
-                ...item,
-                quantity: item.quantity - action.payload.quantity,
-              };
-            } else {
-              return item;
-            }
-          })
-          .filter((item) => item.quantity > 0);
-      } else {
-        newCart = [
-          ...state.cart,
-          {
-            id: action.payload.id,
-            name: action.payload.name,
-            price: action.payload.price,
-            category: action.payload.category,
-            quantity: action.payload.quantity,
-          },
-        ];
-      }
 
       return {
         ...state,
-        cart: newCart,
+        cart: newCart || state.cart,
       };
     }
 

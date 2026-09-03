@@ -8,8 +8,6 @@ export function createStore(initialState: StateType, reducer: ReducerType) {
   }
   function dispatch(action: ActionType) {
     state = reducer(action, state);
-    console.log("===== dispatch called");
-    console.log(state);
 
     localStorage.setItem("cart", JSON.stringify(state));
 
