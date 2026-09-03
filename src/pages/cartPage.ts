@@ -84,14 +84,14 @@ export function renderCart(store: StoreType) {
     totalPrice += item.quantity * item.price;
   });
 
-  let subTotal;
+  let discountPrize;
   const code = store.getState().code;
 
   if (code) {
     let discount = (totalPrice * code) / 100;
-    subTotal = totalPrice - discount;
+    discountPrize = totalPrice - discount;
   } else {
-    subTotal = totalPrice;
+    discountPrize = totalPrice;
   }
 
   const divTotal = document.createElement("div");
@@ -99,12 +99,12 @@ export function renderCart(store: StoreType) {
   divTotal.innerHTML = `<div>
           <p>
             <label>COUPON CODE:</label>
-            <input min="1" type="number" id="coupon-code" value="${code}"/>
+            <input min="1" type="number" id="coupon-code" value="${code}" max="100"/>
             <button class="code-btn">APPLY</button>
           </p>
         </div>
-        <h3>TOTAL PRIZE: ${totalPrice}</h3>
-        <h3>SUB TOTAL: ${subTotal} (applied ${code}% discount)</h3>`;
+        <h3>SUB TOTAL PRIZE: ${totalPrice}</h3>
+        <h3>FINAL PRIZE TOTAL: ${discountPrize} (applied ${code}% discount)</h3>`;
 
   const codeBtn = divTotal.querySelector(".code-btn");
 
@@ -113,10 +113,12 @@ export function renderCart(store: StoreType) {
       "#coupon-code",
     ) as HTMLInputElement;
     const codeValue = codeInput?.value;
-    store.dispatch({
-      type: "APPLY_CODE",
-      payload: Number(codeValue),
-    });
+    if (Number(codeValue) <= 100 && Number(codeValue) > 0) {
+      store.dispatch({
+        type: "APPLY_CODE",
+        payload: Number(codeValue),
+      });
+    }
   });
   section.appendChild(divEl);
   section.appendChild(divTotal);

@@ -25,7 +25,7 @@ const initialState: StateType = {
       quantity: 1,
     },
   ],
-  route: "/product",
+  route: "/cart",
   code: 0,
 };
 
@@ -58,6 +58,8 @@ function renderFn() {
 }
 store.subscribe(renderFn);
 const router = createRouter(store);
+
+router.navigate(store.getState().route);
 
 const aTags = document.querySelectorAll(".nav-links a");
 aTags.forEach((a) => {

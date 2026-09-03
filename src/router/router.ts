@@ -11,7 +11,7 @@ export function createRouter(store: StoreType) {
   }
 
   function navigate(path: string) {
-    const url = "/cart/#" + path;
+    const url = "/#" + path;
     console.log(url);
 
     window.history.pushState({}, "", url);
