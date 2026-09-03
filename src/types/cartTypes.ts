@@ -9,6 +9,7 @@ export type ProductType = {
 export interface StateType {
   cart: Array<ProductType>;
   route: string;
+  code: number;
 }
 export type ActionType =
   | {
@@ -19,7 +20,11 @@ export type ActionType =
       type: "ADD_ITEM";
       payload: ProductType;
     }
-  | { type: "REMOVE_ITEM"; payload: ProductType };
+  | { type: "REMOVE_ITEM"; payload: ProductType }
+  | {
+      type: "APPLY_CODE";
+      payload: number;
+    };
 
 export type ReducerType = (action: ActionType, state: StateType) => StateType;
 

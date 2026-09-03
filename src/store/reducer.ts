@@ -57,16 +57,18 @@ export function reducer(action: ActionType, state: StateType): StateType {
       });
       let newCart;
       if (flag) {
-        newCart = state.cart.map((item) => {
-          if (item.id === action.payload.id) {
-            return {
-              ...item,
-              quantity: item.quantity - action.payload.quantity,
-            };
-          } else {
-            return item;
-          }
-        });
+        newCart = state.cart
+          .map((item) => {
+            if (item.id === action.payload.id) {
+              return {
+                ...item,
+                quantity: item.quantity - action.payload.quantity,
+              };
+            } else {
+              return item;
+            }
+          })
+          .filter((item) => item.quantity > 0);
       } else {
         newCart = [
           ...state.cart,
@@ -84,6 +86,17 @@ export function reducer(action: ActionType, state: StateType): StateType {
         ...state,
         cart: newCart,
       };
+    }
+
+    case "APPLY_CODE": {
+      return {
+        ...state,
+        code: action.payload,
+      };
+    }
+
+    default: {
+      return state;
     }
   }
 }

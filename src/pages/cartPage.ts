@@ -79,18 +79,45 @@ export function renderCart(store: StoreType) {
     });
   });
 
+  let totalPrice = 0;
+  cart.forEach((item) => {
+    totalPrice += item.quantity * item.price;
+  });
+
+  let subTotal;
+  const code = store.getState().code;
+
+  if (code) {
+    let discount = (totalPrice * code) / 100;
+    subTotal = totalPrice - discount;
+  } else {
+    subTotal = totalPrice;
+  }
+
   const divTotal = document.createElement("div");
   divTotal.className = "cart-total";
   divTotal.innerHTML = `<div>
           <p>
             <label>COUPON CODE:</label>
-            <input type="number" />
-            <button>APPLY</button>
+            <input min="1" type="number" id="coupon-code" value="${code}"/>
+            <button class="code-btn">APPLY</button>
           </p>
         </div>
-        <h3>TOTAL PRIZE: 5000</h3>
-        <h3>SUB TOTAL: 3000</h3>`;
+        <h3>TOTAL PRIZE: ${totalPrice}</h3>
+        <h3>SUB TOTAL: ${subTotal} (applied ${code}% discount)</h3>`;
 
+  const codeBtn = divTotal.querySelector(".code-btn");
+
+  codeBtn?.addEventListener("click", () => {
+    const codeInput = divTotal.querySelector(
+      "#coupon-code",
+    ) as HTMLInputElement;
+    const codeValue = codeInput?.value;
+    store.dispatch({
+      type: "APPLY_CODE",
+      payload: Number(codeValue),
+    });
+  });
   section.appendChild(divEl);
   section.appendChild(divTotal);
   return section;

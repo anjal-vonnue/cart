@@ -26,6 +26,7 @@ const initialState: StateType = {
     },
   ],
   route: "/product",
+  code: 0,
 };
 
 const store = createStore(initialState, reducer);
